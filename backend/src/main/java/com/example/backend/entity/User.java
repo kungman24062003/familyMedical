@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role = Role.PATIENT;
+    private Role role = Role.patient;
 
     private String phone;
     private LocalDate dateOfBirth;
@@ -68,9 +68,9 @@ public class User {
 
     // Enum
     public enum Role {
-        PATIENT, DOCTOR, ADMIN
+        patient,
+        doctor,
+        admin
     }
 
-    // Getters and setters
-    // (You can use Lombok @Data to generate automatically)
 }
