@@ -1,32 +1,41 @@
-    package com.example.backend.controller;
+package com.example.backend.controller;
 
-    import org.springframework.http.ResponseEntity;
-    import org.springframework.web.bind.annotation.PostMapping;
-    import org.springframework.web.bind.annotation.RequestBody;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
-    import com.example.backend.entity.User;
-    import com.example.backend.service.AuthService;
-    import com.example.backend.service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-    @RestController
-    @RequestMapping("/auth")
-    public class AuthController {
-        private final AuthService authService;
+import com.example.backend.entity.User;
+import com.example.backend.service.AuthService;
+import com.example.backend.service.UserService;
 
-        public AuthController(AuthService authService) {
-            this.authService = authService;
-        }
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+    private final AuthService authService;
 
-        @PostMapping("/register")
-        public ResponseEntity<?> registerUser(@RequestBody User user) {
-            try {
-                User registeredUser = authService.register(user);
-                return ResponseEntity.ok(registeredUser);
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
-            } catch (RuntimeException e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        try {
+            User registeredUser = authService.register(user);
+            return ResponseEntity.ok(registeredUser);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> postMethodName(@RequestBody Map<String, String> request) {
+        Map<String, Object> entity = authService.login(request.get("email"), request.get("password"));
+        return ResponseEntity.ok(entity);
+    }
+
+}
