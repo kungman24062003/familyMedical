@@ -34,15 +34,5 @@ class UserRepositoryTest {
         assertTrue(found.isEmpty());
     }
 
-    @Test
-    void testSaveAndFindByEmail_Failing() {
-        User user = new User();
-        user.setEmail("duc@example.com");
-
-        userRepository.save(user);
-
-        Optional<User> found = userRepository.findByEmail("duc123@example.com");
-
-        assertTrue(found.isPresent(), "This test fail because the email doesn't exist");
-    }
+   
 }
