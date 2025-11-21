@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 
 @Data
@@ -25,7 +28,7 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String email;
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -66,7 +69,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Log> logs;
 
-    // Enum
     public enum Role {
         patient,
         doctor,

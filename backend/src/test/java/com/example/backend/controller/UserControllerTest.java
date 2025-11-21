@@ -5,6 +5,7 @@ import com.example.backend.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.Mockito.*;
 
 @WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false) 
 class UserControllerTest {
 
     @Autowired
@@ -71,4 +73,37 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("David"));
     }
+    @Test
+    void testCreateUser_Failure() throws Exception {
+        when(userService.createUser(Mockito.any(User.class)))
+                .thenThrow(new RuntimeException("Email exists"));
+
+        String json = """
+                {"name":"David","email":"david@example.com"}
+                """;
+
+        mockMvc.perform(post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isInternalServerError());
+    }
+    @Test
+    void testGetUserById_NotFound() throws Exception {
+        when(userService.getUserById(1)).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/users/1"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testGetAllUsers_Empty() throws Exception {
+        when(userService.getAllUsers()).thenReturn(List.of());
+
+        mockMvc.perform(get("/users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+    }
+
+
+
 }
