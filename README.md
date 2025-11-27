@@ -38,3 +38,13 @@ Run the Spring Boot application:
 
 
 <pre> mvn spring-boot:run </pre>
+
+
+
+Cách để xem api documentation 
+
+Chạy backend 
+
+Truy cập vào http://localhost:8080/v3/api-docs
+
+Copy và paste JSON vào https://editor.swagger.io để xem
