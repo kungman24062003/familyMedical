@@ -1,0 +1,40 @@
+package com.example.backend.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.backend.entity.HouseHold;
+import com.example.backend.repository.HouseHoldRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class HouseHoldService {
+
+    private final HouseHoldRepository householdRepo;
+
+    public List<HouseHold> getAll() {
+        return householdRepo.findAll();
+    }
+
+    public HouseHold getById(Integer id) {
+        return householdRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Household not found"));
+    }
+
+    public HouseHold create(HouseHold household) {
+        return householdRepo.save(household);
+    }
+
+    public HouseHold update(Integer id, HouseHold updated) {
+        HouseHold existing = getById(id);
+        existing.setAddress(updated.getAddress());
+        return householdRepo.save(existing);
+    }
+
+    public void delete(Integer id) {
+        householdRepo.deleteById(id);
+    }
+}

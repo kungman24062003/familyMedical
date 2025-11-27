@@ -1,9 +1,16 @@
 package com.example.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "members")
 public class Member {
 
@@ -35,7 +42,7 @@ public class Member {
 
     @ManyToOne
     @JoinColumn(name = "household_id", nullable = false)
-    private Household household;
+    private HouseHold household;
 
     // Enums for gender and relation
     public enum Gender {
@@ -46,76 +53,4 @@ public class Member {
         CHU_HO, VO, CHONG, CON
     }
 
-    // Getters and setters
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getBhyt() {
-        return bhyt;
-    }
-
-    public void setBhyt(String bhyt) {
-        this.bhyt = bhyt;
-    }
-
-    public Relation getRelation() {
-        return relation;
-    }
-
-    public void setRelation(Relation relation) {
-        this.relation = relation;
-    }
-
-    public Household getHousehold() {
-        return household;
-    }
-
-    public void setHousehold(Household household) {
-        this.household = household;
-    }
 }
