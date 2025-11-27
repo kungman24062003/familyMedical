@@ -31,15 +31,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource)) // Sử dụng CorsConfigurationSource
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/oauth2/**", "/error", "/api/public/**", "/api/test/**").permitAll()
-                .anyRequest().authenticated())
-            .oauth2Login(oauth -> oauth
-                .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-                .successHandler(oAuth2LoginSuccessHandler));
+                .cors(cors -> cors.configurationSource(corsConfigurationSource)) // Sử dụng CorsConfigurationSource
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**", "/oauth2/**", "/error", "/api/public/**", "/api/test/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .oauth2Login(oauth -> oauth
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .successHandler(oAuth2LoginSuccessHandler));
 
         return http.build();
     }
+
 }
