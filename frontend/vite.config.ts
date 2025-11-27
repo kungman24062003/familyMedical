@@ -15,4 +15,11 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  css: {
+    preprocessorOptions: {
+      sass: {
+        api: 'modern-compiler'   // ← Dòng này chữa bách bệnh cho Vuetify 3 + Vite
+      }
+    }
+  }
 })
