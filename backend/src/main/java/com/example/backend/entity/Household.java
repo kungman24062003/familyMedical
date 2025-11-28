@@ -20,7 +20,11 @@ public class HouseHold {
 
     @ManyToOne
     @JoinColumn(name = "househead_id")
-    private User househead; // references users table
+    private User househead; // head of the household
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private User doctor; // family doctor
 
     @Column(length = 200, nullable = false)
     private String address = "";
@@ -31,8 +35,6 @@ public class HouseHold {
     @Column(nullable = false)
     private Boolean isActive = true;
 
-    // One household has many members
     @OneToMany(mappedBy = "household", cascade = CascadeType.ALL)
     private List<Member> members;
-
 }
