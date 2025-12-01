@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -26,42 +25,43 @@ public class UserController {
         this.userService = userService;
         this.jwtUtils = jwtUtils;
     }
-    
+
     @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUser(@RequestHeader(value = "Authorization", required = false) String authHeader) {
-        
+    public ResponseEntity<?> getCurrentUser(
+            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return ResponseEntity.status(401).body("No token provided");
         }
-        
+
         String token = authHeader.substring(7);
-        
+
         try {
             // Validate token using JwtUtils
             if (!jwtUtils.isTokenValid(token)) {
                 return ResponseEntity.status(401).body("Invalid token");
             }
-            
+
             // Extract claims
             var parser = Jwts.parserBuilder()
-                .setSigningKey(jwtUtils.getSecretKey()) // Need to add this method
-                .build();
-            
+                    .setSigningKey(jwtUtils.getSecretKey()) // Need to add this method
+                    .build();
+
             Claims claims = parser.parseClaimsJws(token).getBody();
-            
+
             Integer userId = claims.get("id", Integer.class);
-            
+
             if (userId == null) {
                 return ResponseEntity.badRequest().body("No user ID in token");
             }
-            
+
             Optional<User> userOpt = userService.getUserById(userId);
             if (userOpt.isEmpty()) {
                 return ResponseEntity.status(404).body("User not found");
             }
-            
+
             return ResponseEntity.ok(userOpt.get());
-            
+
         } catch (Exception e) {
             return ResponseEntity.status(401).body("Invalid token: " + e.getMessage());
         }

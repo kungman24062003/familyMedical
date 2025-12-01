@@ -11,11 +11,11 @@ export default defineConfig({
     vueDevTools(),
     tailwindcss(),
   ],
-   server: {
+  server: {
     proxy: {
       '/api': 'http://localhost:8080',
       '/oauth2': 'http://localhost:8080',
-       '/users': 'http://localhost:8080',
+      '/users': 'http://localhost:8080',
     },
   },
 
