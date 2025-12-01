@@ -42,6 +42,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
 
+        
         String email = oauthUser.getAttribute("email");
         String name = oauthUser.getAttribute("name");
 
@@ -68,6 +69,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // Generate JWT with userId
         String token = jwtUtils.generateToken(claims);
 
+
+        System.out.println("JWT Token: " + token);
         // Redirect to frontend SPA with token
         response.sendRedirect("http://localhost:5173/dashboard?token=" + token);
     }

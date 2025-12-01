@@ -10,7 +10,7 @@
       <template v-slot:activator="{ props }">
         <v-btn icon v-bind="props">
           <v-avatar size="36">
-            <v-img src="https://via.placeholder.com/36" alt="Báo Duy Tân"></v-img>
+            <v-img src="https://ui-avatars.com/api/?name=User&size=36" alt="Báo Duy Tân"></v-img>
           </v-avatar>
         </v-btn>
       </template>
