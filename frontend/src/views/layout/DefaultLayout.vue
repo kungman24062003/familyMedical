@@ -5,7 +5,7 @@
     <v-main class="bg-grey-lighten-4">
       <v-container fluid class="pa-6">
         <AppBreadcrumbs class="mb-6" />
-        <slot />
+        <router-view />
       </v-container>
     </v-main>
   </v-app>

@@ -8,51 +8,67 @@
     theme="dark"
   >
     <v-list nav density="comfortable" class="py-3">
-      <v-list-subheader class="text-overline text-grey-lighten-1 pl-6">
+
+      <!-- Tổng quan -->
+      <v-list-item
+        to="/dashboard"
+        prepend-icon="mdi-view-dashboard"
+        title="Tổng quan"
+        class="mx-2"
+        rounded="lg"
+      />
+
+      <v-list-subheader class="text-overline text-grey-lighten-1 pl-6 mt-4">
         QUẢN LÝ CHÍNH
       </v-list-subheader>
 
-      <v-list-item to="/dashboard" prepend-icon="mdi-home" title="Tổng quan" class="mx-2" rounded="lg" />
+      <!-- Quản lý bệnh nhân -->
+      <v-list-item
+        to="/benh-nhan"
+        prepend-icon="mdi-hospital-box-outline"
+        title="Quản lý bệnh nhân"
+        class="mx-2"
+        rounded="lg"
+      />
 
-      <!-- GROUP QUẢN LÝ HỘ GIA ĐÌNH -->
-      <v-list-group :value="isHoGiaDinhOpen">
-        <template v-slot:activator="{ props }">
-          <v-list-item v-bind="props" prepend-icon="mdi-account-multiple" title="Quản lý hộ gia đình" class="mx-2 font-weight-bold" rounded="lg" />
-        </template>
-        <v-list-item to="/ho-gia-dinh/nhan-khau"  title="Quản lý nhân khẩu"      prepend-icon="mdi-account-box"       class="pl-12" />
-        <v-list-item to="/ho-gia-dinh/ho-khau"   title="Quản lý hộ khẩu"        prepend-icon="mdi-hospital-box"      class="pl-12" />
-        <v-list-item to="/ho-gia-dinh/giao-viec" title="Giao việc CSSK hộ GD"   prepend-icon="mdi-clipboard-check"   class="pl-12" />
-      </v-list-group>
+      <!-- Quản lý bác sĩ -->
+      <v-list-item
+        to="/bac-si"
+        prepend-icon="mdi-stethoscope"
+        title="Quản lý bác sĩ"
+        class="mx-2"
+        rounded="lg"
+      />
+
+      <!-- Khám bệnh -->
+      <v-list-item
+        to="/kham-benh"
+        prepend-icon="mdi-clipboard-pulse-outline"
+        title="Quản lý khám bệnh"
+        class="mx-2"
+        rounded="lg"
+      />
+
+      <!-- Lịch sử khám bệnh -->
+      <v-list-item
+        to="/lich-su-kham"
+        prepend-icon="mdi-history"
+        title="Lịch sử khám bệnh"
+        class="mx-2"
+        rounded="lg"
+      />
 
       <v-list-subheader class="text-overline text-grey-lighten-1 pl-6 mt-4">
-        CÔNG VIỆC & BÁO CÁO
+        BÁO CÁO & THỐNG KÊ
       </v-list-subheader>
 
-      <v-list-item to="/ct-cssk"   title="Quản lý CTCSSK"      prepend-icon="mdi-file-document-multiple" class="mx-2" rounded="lg" />
-      <v-list-item to="/thong-ke"  title="Thống kê - Báo cáo"   prepend-icon="mdi-chart-line"             class="mx-2" rounded="lg" />
+      <v-list-item
+        to="/bao-cao"
+        prepend-icon="mdi-file-chart-outline"
+        title="Báo cáo - Thống kê"
+        class="mx-2"
+        rounded="lg"
+      />
     </v-list>
   </v-navigation-drawer>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-const route = useRoute()
-
-const props = withDefaults(defineProps<{ modelValue?: boolean; temporary?: boolean }>(), { temporary: false })
-const emit = defineEmits(['update:modelValue'])
-const drawer = computed({
-  get: () => props.modelValue ?? true,
-  set: v => emit('update:modelValue', v)
-})
-
-const isHoGiaDinhOpen = computed(() => route.path.includes('/ho-gia-dinh'))
-</script>
-
-<style scoped>
-.v-list-item--active {
-  background: rgba(255,255,255,0.25) !important;
-  color: white !important;
-  font-weight: 600;
-}
-</style>

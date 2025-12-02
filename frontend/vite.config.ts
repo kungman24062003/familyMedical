@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-// https://vite.dev/config/
+
 export default defineConfig({
   plugins: [
     vue(),
@@ -18,7 +18,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       sass: {
-        api: 'modern-compiler'   // ← Dòng này chữa bách bệnh cho Vuetify 3 + Vite
+        api: 'modern-compiler'
       }
     }
   }
