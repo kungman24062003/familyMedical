@@ -2,6 +2,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+// import './index.css'
 
 // Vuetify – BẮT BUỘC phải có 5 dòng này
 import 'vuetify/styles'
@@ -21,6 +22,9 @@ const vuetify = createVuetify({
     sets: { mdi },
   },
 })
+
+import './style.css'
+
 
 createApp(App)
   .use(vuetify)

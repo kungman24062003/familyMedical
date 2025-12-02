@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppHeader from '@/components/layout/AppHeader.vue'
-import AppSidebar from '@/components/layout/AppSidebar.vue'
-import AppBreadcrumbs from '@/components/layout/AppBreadcrumbs.vue'
+import AppHeader from '@/components/admin/layout/AppHeader.vue'
+import AppSidebar from '@/components/admin/layout/AppSidebar.vue'
+import AppBreadcrumbs from '@/components/admin/layout/AppBreadcrumbs.vue'
 const drawer = ref(true)
 </script>
