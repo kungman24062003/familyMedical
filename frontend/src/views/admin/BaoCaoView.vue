@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-const msg = "Hello Vue";
+const msg = "báo cáo";
 </script>
 
 <style scoped>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="62fd7308-a428-4f11-a4c3-338120e8e5d4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/DoctorSelector.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/FamilyMemberForm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/FeedbackDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/FeedbackList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/Header.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ProfileForm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/Sidebar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/layout/DashboardLayout.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/layout/FamilyMemberCard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/layout/FamilySection.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/layout/NavContent.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/layout/Sidebar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/layout/StatsCard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/avatar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/avatarFallback.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/avatarImage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/button.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/card.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/cardContent.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/cardDescription.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/cardHeader.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/cardTitle.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/patient/ui/sheet.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/lib/mockData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/layout/DefaultLayoutPatient.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/patient/Dashboard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/patient/Family.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/patient/Feedback.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/patient/LoginPatient.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/patient/Profile.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/patient/RegisterPatient.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/patient/SendToDoctor.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/backend/entity/Household.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/backend/entity/HouseHold.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/layout/AppBreadcrumbs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/admin/layout/AppBreadcrumbs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/layout/AppHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/admin/layout/AppHeader.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/layout/AppSidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/admin/layout/AppSidebar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/DashboardHome.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/admin/DashboardHome.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/HouseholdView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/admin/HouseholdView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/LoginView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/admin/LoginView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/PersonManagementView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/admin/PersonManagementView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/ProgramView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/admin/ProgramView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/RegisterView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/admin/RegisterView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/StatisticsView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/admin/StatisticsView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/TaskView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/admin/TaskView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/layout/DefaultLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/layout/DefaultLayout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/vite.config.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="34lnhGOrs9kOm37mTr37EYRvbhV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "tin",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/j2ee/frontend/src/views",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\j2ee\frontend\src\views" />
+      <recent name="C:\do_an_j2ee\backend\src\main\java\com\example\backend" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\j2ee\frontend\src" />
+      <recent name="C:\j2ee\frontend\src\views\patient" />
+      <recent name="C:\j2ee\frontend\src\views\admin" />
+      <recent name="C:\j2ee\frontend\src\components\admin" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="62fd7308-a428-4f11-a4c3-338120e8e5d4" name="Changes" comment="" />
+      <created>1761797143479</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761797143479</updated>
+    </task>
+    <servers />
+  </component>
+</project>
