@@ -15,7 +15,11 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:8080',
       '/oauth2': 'http://localhost:8080',
+<<<<<<< HEAD
       '/users': 'http://localhost:8080',
+=======
+       '/users': 'http://localhost:8080',
+>>>>>>> 8273948 (oauth fix)
     },
   },
 
