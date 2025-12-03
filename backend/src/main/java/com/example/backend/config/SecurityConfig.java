@@ -34,7 +34,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource)) // Sử dụng CorsConfigurationSource
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/oauth2/**", "/error", "/api/public/**", "/api/test/**")
+                        .requestMatchers("/auth/**", "/oauth2/**", "/error", "/api/public/**", "/api/test/**",
+                                "/api/chat/**")
                         .permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(oauth -> oauth
