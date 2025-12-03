@@ -49,7 +49,21 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import DashboardCard from '@/components/patient/DashboardCard.vue'
 import FamilyMemberCard from '@/components/patient/FamilyMemberForm.vue'
+import { onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
+
+onMounted(() => {
+  const queryToken = route.query.token as string | undefined
+  if (queryToken) {
+    localStorage.setItem('patientToken', queryToken)
+    // remove ?token=... from URL
+    router.replace({ path: '/' })
+  }
+})
 </script>

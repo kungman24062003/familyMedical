@@ -12,55 +12,7 @@
         <relativePath/>
     </parent>
 
-    <!-- Add Spring Milestone Repo -->
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <!-- Add Spring Milestone Repo -->
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <!-- Add Spring Milestone Repo -->
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <!-- Add Spring Milestone Repo -->
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <!-- Add Spring Milestone Repo -->
+    <!-- Spring Milestone Repo (CHỈ ĐỂ 1 CÁI DUY NHẤT) -->
     <repositories>
         <repository>
             <id>spring-milestones</id>
@@ -83,7 +35,7 @@
         <spring-ai.version>1.1.0</spring-ai.version>
     </properties>
 
-    <!-- AI Dependency Management (BOM) -->
+    <!-- BOM Spring AI -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -98,22 +50,19 @@
 
     <dependencies>
 
-        <!-- Spring AI: OpenAI Model -->
+        <!-- Spring AI for OpenAI -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-openai</artifactId>
         </dependency>
 
-        <!-- Spring AI: Chroma Vector Store -->
- 
-
-        <!-- Optional: AI Vector Store Advisors -->
+        <!-- Vector Store Advisors (tuỳ chọn) -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-advisors-vector-store</artifactId>
         </dependency>
 
-        <!-- Your existing dependencies -->
+        <!-- Spring Boot Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>

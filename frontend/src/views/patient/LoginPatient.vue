@@ -71,6 +71,13 @@
         >
           Login
         </v-btn>
+            <v-btn
+            color="red darken-1"
+            class="mb-4"
+            @click="loginWithGoogle"
+          >
+            <v-icon left>mdi-google</v-icon> Login with Google
+          </v-btn>
       </v-form>
 
       <!-- Footer copyright -->
@@ -109,7 +116,9 @@ const passwordRules = [
   (v: string) => !!v || 'Vui lòng nhập mật khẩu',
   (v: string) => v.length >= 6 || 'Mật khẩu ít nhất 6 ký tự'
 ]
-
+ const loginWithGoogle = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google"
+  }
 const login = async () => {
   if (!valid.value) return
   loading.value = true
