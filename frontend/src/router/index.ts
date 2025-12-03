@@ -62,9 +62,9 @@ const router = createRouter({
     },
 
     // ── Trang đăng nhập / đăng ký (Admin) ─────────────────
-        { path: '/admin', redirect: '/admin/login' },
-        { path: '/admin/login', component: Login, meta: { requiresAuth: false } },
-        { path: '/admin/register', component: Register, meta: { requiresAuth: false } },
+    { path: '/admin', redirect: '/admin/login' },
+    { path: '/admin/login', component: Login, meta: { requiresAuth: false } },
+    { path: '/admin/register', component: Register, meta: { requiresAuth: false } },
 
     // ── Tất cả trang admin → dùng DefaultLayout và thêm /admin ───────
     {

@@ -1,5 +1,8 @@
 package com.example.backend.utils;
 
+import java.sql.Date;
+import java.util.Map;
+
 import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Component;
@@ -13,12 +16,12 @@ public class JwtUtils {
     private static final long EXPERATION_TIME = 86400000;
     private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public String genderateToken(String subject) {
+    public String generateToken(Map<String, Object> claims) {
         long now = System.currentTimeMillis();
         return Jwts.builder()
-                .setSubject(subject)
-                .setIssuedAt(new java.util.Date(now))
-                .setExpiration(new java.util.Date(now + EXPERATION_TIME))
+                .setClaims(claims) // set multiple claims
+                .setIssuedAt(new Date(now))
+                .setExpiration(new Date(now + EXPERATION_TIME))
                 .signWith(SECRET_KEY)
                 .compact();
     }
@@ -42,5 +45,10 @@ public class JwtUtils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public SecretKey getSecretKey() {
+       return SECRET_KEY;
+
     }
 }

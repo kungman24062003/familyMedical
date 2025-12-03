@@ -44,7 +44,13 @@ public class AuthService {
             throw new RuntimeException("Invalid email or password!");
         }
 
-        String token = jwtUtils.genderateToken(user.getEmail());
+        Map<String, Object> claims = Map.of(
+                "id", user.getId(),
+                "name", user.getName(),
+                "email", user.getEmail(),
+                "role", user.getRole());
+
+        String token = jwtUtils.generateToken(claims);
         return Map.of(
                 "user", Map.of(
                         "id", user.getId(),
