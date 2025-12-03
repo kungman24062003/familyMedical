@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-xl rounded-2xl p-6 max-w-xs mx-auto border border-gray-100">
+  <div class="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
 
     <div class="flex items-start mb-6">
       
@@ -14,11 +14,8 @@
       <div class="flex-grow">
         <div class="flex justify-between items-start mb-1">
             <h2 class="text-xl font-bold text-gray-900 leading-tight">
-              {{ props.name }}
+              {{ props.name }}  
             </h2>
-            <span class="flex items-center text-sm font-bold text-gray-800 px-2 py-1 bg-yellow-400 rounded-lg ml-2">
-                ⭐️ {{ props.rating.toFixed(1) }}
-            </span>
         </div>
         
         <p class="text-base font-medium text-teal-500">
@@ -68,11 +65,6 @@ const props = defineProps({
     type: String,
     required: true,
     default: 'Chuyên khoa'
-  },
-  rating: {
-    type: Number,
-    required: true,
-    default: 0
   },
   location: {
     type: String,

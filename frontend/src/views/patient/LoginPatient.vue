@@ -76,7 +76,7 @@
       <!-- Footer copyright -->
       <div class="text-center mt-10">
         <p class="text-caption grey--text text--darken-1 ">
-          2025 © Copyright
+          Chưa có tài khoản? <router-link to="/register" class="text-blue-700 hover:text-blue-300">Đăng ký</router-link>
         </p>
       </div>
     </v-card>
@@ -87,6 +87,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import type { VForm } from 'vuetify/components'
+import api from '@/api'
 
 const router = useRouter()
 const formRef = ref<VForm | null>(null)
@@ -110,19 +111,31 @@ const passwordRules = [
   (v: string) => v.length >= 6 || 'Mật khẩu ít nhất 6 ký tự'
 ]
 
+
 const login = async () => {
-  if (!valid.value) return
-  loading.value = true
+  if (!valid.value) return;
+  loading.value = true;
 
-  // Giả lập đăng nhập
-  await new Promise(resolve => setTimeout(resolve, 1500))
-  loading.value = false
+  try {
+    const res = await api.post("/users/login/patient", {
+      email: form.username,     // backend dùng email
+      password: form.password
+    });
 
-  // Lưu token demo để guard nhận là đã login
-  localStorage.setItem('patientToken', 'token-demo-patient')
-  router.push({ name: 'Dashboard' }) // patient dashboard
+    // Lưu token từ backend trả về
+    localStorage.setItem("patientToken", res.data.token);
+    localStorage.setItem("patientName", res.data.name);
+    localStorage.setItem("patientId", res.data.id);
 
-}
+    router.push({ name: "dashboardPatient" });
+  } catch (err: any) {
+    console.error(err);
+    alert(err.response?.data || "Đăng nhập thất bại");
+  } finally {
+    loading.value = false;
+  }
+};
+
 
 </script>
 

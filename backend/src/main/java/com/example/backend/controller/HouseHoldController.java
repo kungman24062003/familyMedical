@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/households")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class HouseHoldController {
 
     private final HouseHoldService service;

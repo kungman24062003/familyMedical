@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/medical-records")
+@CrossOrigin(origins = "http://localhost:5173")
 public class MedicalRecordController {
 
     private final MedicalRecordService recordService;
@@ -72,9 +73,7 @@ public class MedicalRecordController {
         record.setUser(user);
         record.setDoctor(doctor);
         record.setDiagnosis(request.getDiagnosis());
-        record.setSymptoms(request.getSymptoms());
         record.setMedications(request.getMedications());
-        record.setAllergies(request.getAllergies());
         record.setVisitDate(request.getVisitDate());
         record.setNotes(request.getNotes());
         record.setStatus(MedicalRecord.Status.PENDING);
@@ -93,4 +92,11 @@ public class MedicalRecordController {
         MedicalRecord updated = recordService.updateStatus(id, status);
         return ResponseEntity.ok(recordService.toResponse(updated));
     }
+
+    @GetMapping("/household/{userId}")
+    public ResponseEntity<List<MedicalRecordResponse>> getHouseholdRecords(@PathVariable Integer userId) {
+        List<MedicalRecordResponse> res = recordService.getRecordsByHouseholdUserResponse(userId);
+        return ResponseEntity.ok(res);
+    }
+
 }

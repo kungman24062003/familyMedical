@@ -36,9 +36,8 @@ public class Member {
     @Column(length = 12)
     private String bhyt = "";
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 10)
-    private Relation relation = Relation.CHU_HO;
+    @Column(length = 100, nullable = false)
+    private String relation;
 
     @ManyToOne
     @JoinColumn(name = "household_id", nullable = false)
@@ -49,8 +48,5 @@ public class Member {
         MALE, FEMALE, OTHER
     }
 
-    public enum Relation {
-        CHU_HO, VO, CHONG, CON
-    }
 
 }

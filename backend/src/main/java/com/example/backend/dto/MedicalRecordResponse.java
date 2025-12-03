@@ -11,9 +11,7 @@ public class MedicalRecordResponse {
     private Integer doctorId;
     private String doctorName;
     private String diagnosis;
-    private String symptoms;
     private String medications;
-    private String allergies;
     private LocalDateTime visitDate;
     private String notes;
     private String status;

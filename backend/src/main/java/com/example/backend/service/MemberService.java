@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.backend.entity.HouseHold;
 import com.example.backend.entity.Member;
-import com.example.backend.repository.HouseHoldRepository;
 import com.example.backend.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -15,36 +13,39 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final HouseHoldRepository householdRepo;
-    private final MemberRepository memberRepo;
+    private final MemberRepository memberRepository;
 
-    public List<Member> getAllMembers(Integer householdId) {
-        return memberRepo.findByHouseholdId(householdId);
+    public List<Member> getAll() {
+        return memberRepository.findAll();
     }
 
-    public Member getMember(Integer householdId, Integer memberId) {
-        return memberRepo.findById(memberId)
-                .filter(m -> m.getHousehold().getId().equals(householdId))
+    public Member getById(Integer id) {
+        return memberRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Member not found"));
     }
 
-    public Member createMember(Integer householdId, Member member) {
-        HouseHold household = householdRepo.findById(householdId)
-                .orElseThrow(() -> new RuntimeException("Household not found"));
-
-        member.setHousehold(household);
-        return memberRepo.save(member);
+    public List<Member> getByHouseholdId(Integer householdId) {
+        return memberRepository.findByHouseholdId(householdId);
     }
 
-    public Member updateMember(Integer householdId, Integer memberId, Member data) {
-        Member member = getMember(householdId, memberId);
-        member.setFullname(data.getFullname());
-        member.setRelation(data.getRelation());
-        return memberRepo.save(member);
+    public Member create(Member member) {
+        return memberRepository.save(member);
     }
 
-    public void deleteMember(Integer householdId, Integer memberId) {
-        Member member = getMember(householdId, memberId);
-        memberRepo.delete(member);
+    public Member update(Integer id, Member updated) {
+        Member existing = getById(id);
+        existing.setFullname(updated.getFullname());
+        existing.setIdCard(updated.getIdCard());
+        existing.setAddress(updated.getAddress());
+        existing.setGender(updated.getGender());
+        existing.setDateOfBirth(updated.getDateOfBirth());
+        existing.setBhyt(updated.getBhyt());
+        existing.setRelation(updated.getRelation());
+        existing.setHousehold(updated.getHousehold());
+        return memberRepository.save(existing);
+    }
+
+    public void delete(Integer id) {
+        memberRepository.deleteById(id);
     }
 }
