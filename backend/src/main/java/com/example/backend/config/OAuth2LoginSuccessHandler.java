@@ -1,5 +1,6 @@
 package com.example.backend.config;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,11 +43,9 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
 
-        
         String email = oauthUser.getAttribute("email");
         String name = oauthUser.getAttribute("name");
 
-        // Check if user already exists
         Optional<User> userOpt = userService.getUserByEmail(email);
         User user;
         if (userOpt.isPresent()) {
@@ -61,17 +60,28 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             user.setRole(User.Role.patient); // default role
             userService.createUser(user);
         }
+
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
         claims.put("email", user.getEmail());
         claims.put("name", user.getName());
         claims.put("role", user.getRole());
-        // Generate JWT with userId
+
+        // Generate JWT with user info
         String token = jwtUtils.generateToken(claims);
 
+        // Redirect based on role
+        String redirectUrl;
+        if (user.getRole().toString() == "admin") {
+            redirectUrl = "http://localhost:5173/admin/dashboard";
+        } else {
+            redirectUrl = "http://localhost:5173/";
+        }
+        // Append token to query
+        redirectUrl += "?token=" + token;
 
-        System.out.println("JWT Token: " + token);
-        // Redirect to frontend SPA with token
-        response.sendRedirect("http://localhost:5173/dashboard?token=" + token);
+        System.out.println("Redirecting to: " + redirectUrl);
+        response.sendRedirect(redirectUrl);
     }
+
 }
