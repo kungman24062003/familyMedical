@@ -29,6 +29,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = true)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -38,6 +39,9 @@ public class User {
     private LocalDate dateOfBirth;
     private String gender;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AuthProvider authProvider; // LOCAL, GOOGLE
     @Column(columnDefinition = "TEXT")
     private String address;
 
@@ -75,4 +79,8 @@ public class User {
         admin
     }
 
+    public enum AuthProvider {
+        LOCAL,
+        GOOGLE
+    }
 }

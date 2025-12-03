@@ -9,7 +9,7 @@
         <v-icon size="48" color="primary" class="mr-4">mdi-view-dashboard</v-icon>
         <div>
           <h1 class="text-h4 font-weight-bold">
-            Chào mừng quay trở lại, <strong>{{ user.name }}</strong>
+            Chào mừng quay trở lại, <strong>{{ user.name }}</strong>!sdasdsaa
           </h1>
           <p class="text-body-1 text-medium-emphasis mb-0">
             Email: {{ user.email }}<br>
