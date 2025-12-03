@@ -23,6 +23,7 @@ import DefaultLayout from '@/views/layout/DefaultLayout.vue'
 // Các view trong patient dashboard
 import FamilyMember from '@/views/patient/FamilyMember.vue'
 import FindDoctor from '@/views/patient/FindDoctor.vue'
+import Feedback from '@/views/patient/Feedback.vue'
 
 // Các view trong admin dashboard
 import DashboardHome from '@/views/admin/DashboardHome.vue'
@@ -53,9 +54,10 @@ const router = createRouter({
       component: DefaultLayoutPatient,
       meta: { requiresAuth: true },
       children: [
-        { path: '', name: 'Dashboard', component: Dashboard },
+        { path: '', name: 'dashboardPatient', component: Dashboard },
         { path: 'member', component: FamilyMember },
         { path: 'doctor', component: FindDoctor },
+        { path: 'feedback', component: Feedback },
       ]
     },
 
@@ -88,39 +90,35 @@ const router = createRouter({
     },
 
     // ── Redirect nếu không khớp route ─────────────────────────────
-    { path: '/:pathMatch(.*)*', redirect: '/admin/dashboard' }
+    { path: '/:pathMatch(.*)*', redirect: '/' }
   ]
 })
 
-// // ── Navigation Guard (bảo vệ route) ─────────────────────────────
-// router.beforeEach((to, from, next) => {
-//   const patientLoggedIn = !!localStorage.getItem('patientToken')
-//   const adminLoggedIn = !!localStorage.getItem('adminToken')
+router.beforeEach((to, from, next) => {
+  const patientLoggedIn = !!localStorage.getItem('patientToken')
+  const adminLoggedIn = !!localStorage.getItem('adminToken')
 
-//   // Route cần auth (ví dụ admin hoặc patient)
-//   if (to.meta.requiresAuth) {
-//     if (to.path.startsWith('/admin')) {
-//       // Trang admin → cần admin login
-//       if (!adminLoggedIn) next('/admin/login')
-//       else next()
-//     } else {
-//       // Trang patient → cần patient login
-//       if (!patientLoggedIn) next('/login')
-//       else next()
-//     }
-//   } else {
-//     // Trang login/register → nếu đã login → redirect đúng dashboard
-//     if (to.path === '/login' || to.path === '/register') {
-//       if (patientLoggedIn) next({ name: 'Dashboard' })
-//       else next()
-//     } else if (to.path === '/admin/login' || to.path === '/admin/register') {
-//       if (adminLoggedIn) next('/admin/dashboard')
-//       else next()
-//     } else {
-//       next()
-//     }
-//   }
-// })
+  if (to.meta.requiresAuth) {
+    if (to.path.startsWith('/admin')) {
+      if (!adminLoggedIn) next('/admin/login')
+      else next()
+    } else {
+      if (!patientLoggedIn) next('/login')
+      else next()
+    }
+  } else {
+    if (to.path === '/login' || to.path === '/register') {
+      if (patientLoggedIn) next({ name: 'dashboardPatient' })
+      else next()
+    } else if (to.path === '/admin/login' || to.path === '/admin/register') {
+      if (adminLoggedIn) next('/admin/dashboard')
+      else next()
+    } else {
+      next()
+    }
+  }
+})
+
 
 
 export default router

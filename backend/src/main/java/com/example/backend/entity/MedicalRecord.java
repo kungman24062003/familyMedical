@@ -31,13 +31,7 @@ public class MedicalRecord {
     private String diagnosis;
 
     @Column(columnDefinition = "TEXT")
-    private String symptoms;
-
-    @Column(columnDefinition = "TEXT")
     private String medications;
-
-    @Column(columnDefinition = "TEXT")
-    private String allergies;
 
     private LocalDateTime visitDate;
 

@@ -1,7 +1,11 @@
 <template>
   <div class="mb-6 flex justify-between items-center">
-    <h3 class="text-xl font-semibold">Quản lý gia đình</h3>
-    <button class=" px-5 bg-teal-500 text-white font-bold py-2 rounded-lg hover:bg-teal-600 transition duration-150">Thêm thành viên</button>
+    <div>
+      <h3 class="text-xl font-semibold">Quản lý gia đình</h3>
+      <p>Xem và quản lý hồ sơ sức khỏe của gia đình bạn.</p>
+    </div>
+    <button @click="isModalOpen = true" class=" px-5 bg-teal-500 text-white font-bold py-2 rounded-lg hover:bg-teal-600 transition duration-150">Thêm thành viên</button>
+    <AddFamilyMemberModal v-model:is-open="isModalOpen" @save="handleSave" />
   </div>
 
     <div class="flex flex-wrap gap-4">
@@ -14,5 +18,13 @@
 
 <style scoped></style>
 <script setup>
-import FamilyMemberCard from '@/components/patient/FamilyMemberCard.vue'
+import FamilyMemberCard from '@/components/patient/FamilyMemberCard.vue';
+import { ref } from 'vue';
+import AddFamilyMemberModal from './AddFamilyMemberModel.vue'; // Thay đổi đường dẫn nếu cần
+
+const isModalOpen = ref(false);
+
+const handleSave = (memberData) => {
+  console.log('New family member added:', memberData);
+};
 </script>

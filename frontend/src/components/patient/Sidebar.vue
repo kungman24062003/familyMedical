@@ -35,13 +35,47 @@
 
       </ul>
     </div>
-    <div class="flex items-center gap-2 mt-4 p-2 border-t pt-4">
-      <div class="w-10 h-10 rounded-full bg-gray-200"></div>
-      <div>
-        <p class="text-sm font-medium">Nguyen Van A</p>
-        <p class="text-xs text-gray-500">nguyenvana@example.com</p>
-        <button class="text-xs text-red-500 mt-1">Sign Out</button>
+    <div class="p-4 border-t bg-secondary/30">
+      <div class="m-auto">
+        <p class="text-sm font-medium">{{ patientName }}</p>
+        <p class="text-xs text-gray-500">{{ patientEmail }}</p>
+        <button 
+          @click="signOut"
+          class="mt-2 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background h-10 px-4 py-2 w-full justify-start gap-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 hover:border-destructive/50"
+        >
+          Sign Out
+        </button>
       </div>
     </div>
   </div>
 </template>
+
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import api from '@/api';
+
+const patientName = ref(''); 
+const patientEmail = ref(''); 
+
+const patientId = localStorage.getItem('patientId');
+
+onMounted(async () => {
+  if (patientId) {
+    try {
+      const res = await api.get(`/users/${patientId}`);
+      patientName.value = res.data.name;
+      patientEmail.value = res.data.email;
+    } catch (err) {
+      console.error('Lỗi lấy thông tin người dùng:', err);
+    }
+  }
+});
+
+const signOut = () => {
+  localStorage.removeItem('patientToken');
+  localStorage.removeItem('patientId');
+  localStorage.removeItem('patientName');
+  window.location.href = '/login'; // hoặc router.push('/login')
+};
+</script>

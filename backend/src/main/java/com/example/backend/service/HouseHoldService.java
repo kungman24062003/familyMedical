@@ -37,4 +37,17 @@ public class HouseHoldService {
     public void delete(Integer id) {
         householdRepo.deleteById(id);
     }
+
+    public Integer getNextId() {
+        // Lấy Household có ID lớn nhất
+        return householdRepo.findAll(Sort.by(Sort.Direction.DESC, "id"))
+                .stream()
+                .findFirst()
+                .map(h -> h.getId() + 1) // ID tiếp theo
+                .orElse(1); // Nếu chưa có dữ liệu, trả về 1
+    }
+    @GetMapping("/next-id")
+    public Integer getNextId() {
+        return householdRepo.getMaxId() + 1;
+    }
 }

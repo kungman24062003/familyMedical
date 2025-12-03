@@ -1,12 +1,11 @@
 <template>
-  <div class="flex-1 p-8 bg-gray-50 overflow-auto">
     <h2 class="text-2xl font-bold mb-6">Hello, A! 👋</h2>
 
     <!-- Cards -->
     <div class="grid grid-cols-3 gap-4 mb-6">
-      <DashboardCard title="Next Appointment" value="Oct 24" subtitle="Dr. Le Van Minh • Cardiology" />
-      <DashboardCard title="Last Vitals" value="120/80" subtitle="Blood Pressure • Normal" />
-      <DashboardCard title="Family Members" value="3" subtitle="Active profiles monitored" />
+      <DashboardCard title="Tổng số feedback đã nhận" :value="totalFeedback" />
+      <DashboardCard title="Tổng số bác sĩ trong hệ thống" :value="totalDoctor" />
+      <DashboardCard title="Số thành viên trong gia đình" :value="totalMember" />
     </div>
 
     <!-- Family Section -->
@@ -26,7 +25,7 @@
         <div class="p-6 bg-green-50 rounded-lg border-t-4 border-green-200">
           <h3 class="text-lg font-semibold text-green-800 mb-2">Need a Doctor?</h3>
           <p class="text-sm text-green-700 mb-4">Find the best specialists near you for your family's health needs.</p>
-          <button class="w-full bg-teal-700 text-white font-bold py-2 rounded-lg hover:bg-teal-700 transition duration-150">Find a Doctor</button>
+          <button @click="goDoctor" class="w-full bg-teal-700 text-white font-bold py-2 rounded-lg hover:bg-teal-700 transition duration-150">Find a Doctor</button>
         </div>
 
         <div class="p-6 bg-white rounded-lg shadow-md">
@@ -40,30 +39,73 @@
             <p class="text-gray-600 text-sm italic line-clamp-2">Your blood pressure readings look stable. Keep taking the medication...</p>
           </div>
           
-          <button class="mt-4 w-full border border-gray-300 text-gray-700 font-medium py-2 rounded-lg hover:bg-gray-100 transition duration-150">View All Feedback</button>
+          <button @click="goFeedback" class="mt-4 w-full border border-gray-300 text-gray-700 font-medium py-2 rounded-lg hover:bg-gray-100 transition duration-150">View All Feedback</button>
         </div>
         
       </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
 import DashboardCard from '@/components/patient/DashboardCard.vue'
 import FamilyMemberCard from '@/components/patient/FamilyMemberForm.vue'
-import { onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import api from '@/api';
 
-const route = useRoute()
-const router = useRouter()
+const patientId = localStorage.getItem('patientId');
 
-onMounted(() => {
-  const queryToken = route.query.token as string | undefined
-  if (queryToken) {
-    localStorage.setItem('patientToken', queryToken)
-    // remove ?token=... from URL
-    router.replace({ path: '/' })
+const patientName = ref('');
+const patientEmail = ref('');
+
+const totalFeedback = ref(0); 
+const totalDoctor = ref(0); 
+const totalMember = ref(0);
+
+const router = useRouter();
+const goDoctor = () => router.push('/doctor');
+const goFeedback = () => router.push('/feedback');
+
+onMounted(async () => {
+  if (patientId) {
+    // Lấy thông tin cá nhân
+    try {
+      const res = await api.get(`/users/${patientId}`);
+      patientName.value = res.data.name;
+      patientEmail.value = res.data.email;
+    } catch (err) {
+      console.error('Lỗi lấy thông tin người dùng:', err);
+    }
+
+    // Lấy tất cả medical record của hộ gia đình
+    try {
+      const resRecords = await api.get(`/medical-records/household/${patientId}`);
+      const records = resRecords.data; // array of MedicalRecordResponse
+
+      // Giả sử mỗi MedicalRecordResponse có field feedbackList
+      // Nếu chưa có, chỉ tính tổng số record làm demo
+      totalFeedback.value = records.length;
+
+      // Tính tổng thành viên trong gia đình từ các userId trong medical record
+      const members = new Set(records.map(r => r.userId));
+      totalMember.value = members.size;
+
+    } catch (err) {
+      console.error('Lỗi lấy medical records hộ gia đình:', err);
+    }
+    // Lấy tất cả bác sĩ của hệ thống
+    try {
+      const resRecords = await api.get(`/users/doctors`);
+      const records = resRecords.data; // array of MedicalRecordResponse
+
+      // Giả sử mỗi MedicalRecordResponse có field feedbackList
+      // Nếu chưa có, chỉ tính tổng số record làm demo
+      totalDoctor.value = records.length;
+
+    } catch (err) {
+      console.error('Lỗi lấy bác sĩ:', err);
+    }
   }
-})
+});
 </script>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MedicalRecordService {
@@ -21,6 +22,7 @@ public class MedicalRecordService {
         this.userRepository = userRepository;
     }
 
+    // ================= CRUD =================
     public MedicalRecord createMedicalRecord(MedicalRecord record) {
         return recordRepository.save(record);
     }
@@ -52,7 +54,7 @@ public class MedicalRecordService {
         return recordRepository.save(record);
     }
 
-    // ===================== Mapping entity -> DTO =====================
+    // ================= Mapping entity -> DTO =================
     public MedicalRecordResponse toResponse(MedicalRecord record) {
         MedicalRecordResponse res = new MedicalRecordResponse();
         res.setId(record.getId());
@@ -63,9 +65,7 @@ public class MedicalRecordService {
             res.setDoctorName(record.getDoctor().getName());
         }
         res.setDiagnosis(record.getDiagnosis());
-        res.setSymptoms(record.getSymptoms());
         res.setMedications(record.getMedications());
-        res.setAllergies(record.getAllergies());
         res.setVisitDate(record.getVisitDate());
         res.setNotes(record.getNotes());
         res.setStatus(record.getStatus().name());
@@ -74,6 +74,17 @@ public class MedicalRecordService {
     }
 
     public List<MedicalRecordResponse> toResponseList(List<MedicalRecord> records) {
-        return records.stream().map(this::toResponse).toList();
+        return records.stream().map(this::toResponse).collect(Collectors.toList());
+    }
+
+    // ================= Lấy tất cả medical record của 1 hộ gia đình =================
+    public List<MedicalRecord> getRecordsByHouseholdUser(Integer userId) {
+        return recordRepository.findByHouseholdUserId(userId);
+    }
+
+    public List<MedicalRecordResponse> getRecordsByHouseholdUserResponse(Integer userId) {
+        return getRecordsByHouseholdUser(userId).stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 }

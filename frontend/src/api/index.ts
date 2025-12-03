@@ -1,16 +1,10 @@
-import axios from 'axios'
+import axios from "axios";
 
 const api = axios.create({
-
-})
-
-// Interceptor thêm token tự động vào header Authorization
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('jwtToken')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+  baseURL: "http://localhost:8080", // backend Spring Boot
+  headers: {
+    "Content-Type": "application/json"
   }
-  return config
-})
+});
 
-export default api
+export default api;
