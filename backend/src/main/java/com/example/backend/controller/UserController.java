@@ -5,6 +5,10 @@ import com.example.backend.service.UserService;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.example.backend.utils.JwtUtils;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.example.backend.dto.LoginRequest;
 
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -21,9 +26,11 @@ public class UserController {
     private final UserService userService;
     @Autowired
     private UserRepository userRepository;
+    private final JwtUtils jwtUtils;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtUtils jwtUtils) {
         this.userService = userService;
+        this.jwtUtils = jwtUtils;
     }
 
     @GetMapping
@@ -66,4 +73,42 @@ public class UserController {
     }
 
 
+}
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(
+            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+
+        try {
+            // Check token
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(401).body("No token provided");
+            }
+
+            String token = authHeader.substring(7);
+
+            // Parse JWT
+            var parser = Jwts.parserBuilder()
+                    .setSigningKey(jwtUtils.getSecretKey()) // bạn cần có hàm getSecretKey() trong JwtUtils
+                    .build();
+
+            Claims claims = parser.parseClaimsJws(token).getBody();
+
+            Integer userId = claims.get("id", Integer.class);
+
+            if (userId == null) {
+                return ResponseEntity.badRequest().body("No user ID found in token");
+            }
+
+            Optional<User> userOpt = userService.getUserById(userId);
+
+            if (userOpt.isEmpty()) {
+                return ResponseEntity.status(404).body("User not found");
+            }
+
+            return ResponseEntity.ok(userOpt.get());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid token: " + e.getMessage());
+        }
+    }
 }

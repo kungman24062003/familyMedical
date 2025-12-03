@@ -47,7 +47,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import DashboardCard from '@/components/patient/DashboardCard.vue'
 import FamilyMemberForm from '@/components/patient/FamilyMemberForm.vue'
 import { useRouter } from 'vue-router'
