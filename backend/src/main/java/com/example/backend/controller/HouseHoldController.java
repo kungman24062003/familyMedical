@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 
 import com.example.backend.entity.HouseHold;
 import com.example.backend.service.HouseHoldService;
@@ -48,4 +50,11 @@ public class HouseHoldController {
     public void delete(@PathVariable Integer id) {
         service.delete(id);
     }
+
+    
+    @GetMapping("/by-user/{userId}")
+    public HouseHold getByHouseHead(@PathVariable Integer userId) {
+        return service.getByHouseHeadId(userId);
+    }
+
 }

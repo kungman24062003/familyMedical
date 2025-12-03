@@ -1,5 +1,5 @@
 <template>
-    <h2 class="text-2xl font-bold mb-6">Hello, A! 👋</h2>
+    <h2 class="text-2xl font-bold mb-6">Hello, {{ patientName }} 👋</h2>
 
     <!-- Cards -->
     <div class="grid grid-cols-3 gap-4 mb-6">
@@ -15,10 +15,10 @@
 
     <div class="grid grid-cols-3 gap-2">
       <div class="grid grid-cols-2 col-span-2 gap-4">
-        <FamilyMemberCard name="Add Member" isAdd />
-        <FamilyMemberCard name="Nguyen Van A" role="Self (Admin)" lastCheckup="Jan 15, 2023" condition="Hypertension" />
-        <FamilyMemberCard name="Tran Thi B" role="Spouse" lastCheckup="N/A" condition="None" />
-        <FamilyMemberCard name="Nguyen Van C" role="Child" lastCheckup="2023-08-10" condition="Dust Mites" />
+        <FamilyMemberForm name="Add Member" isAdd />
+        <FamilyMemberForm name="Nguyen Van A" role="Self (Admin)" lastCheckup="Jan 15, 2023" condition="Hypertension" />
+        <FamilyMemberForm name="Tran Thi B" role="Spouse" lastCheckup="N/A" condition="None" />
+        <FamilyMemberForm name="Nguyen Van C" role="Child" lastCheckup="2023-08-10" condition="Dust Mites" />
       </div>
       <div>
         <div class="space-y-6 max-w-sm">
@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import DashboardCard from '@/components/patient/DashboardCard.vue'
-import FamilyMemberCard from '@/components/patient/FamilyMemberForm.vue'
+import FamilyMemberForm from '@/components/patient/FamilyMemberForm.vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue';
 import api from '@/api';
@@ -63,49 +63,58 @@ const totalFeedback = ref(0);
 const totalDoctor = ref(0); 
 const totalMember = ref(0);
 
+const householdId = ref(null);
+
 const router = useRouter();
 const goDoctor = () => router.push('/doctor');
 const goFeedback = () => router.push('/feedback');
 
 onMounted(async () => {
-  if (patientId) {
-    // Lấy thông tin cá nhân
-    try {
-      const res = await api.get(`/users/${patientId}`);
-      patientName.value = res.data.name;
-      patientEmail.value = res.data.email;
-    } catch (err) {
-      console.error('Lỗi lấy thông tin người dùng:', err);
-    }
+  if (!patientId) return;
 
-    // Lấy tất cả medical record của hộ gia đình
-    try {
-      const resRecords = await api.get(`/medical-records/household/${patientId}`);
-      const records = resRecords.data; // array of MedicalRecordResponse
-
-      // Giả sử mỗi MedicalRecordResponse có field feedbackList
-      // Nếu chưa có, chỉ tính tổng số record làm demo
-      totalFeedback.value = records.length;
-
-      // Tính tổng thành viên trong gia đình từ các userId trong medical record
-      const members = new Set(records.map(r => r.userId));
-      totalMember.value = members.size;
-
-    } catch (err) {
-      console.error('Lỗi lấy medical records hộ gia đình:', err);
-    }
-    // Lấy tất cả bác sĩ của hệ thống
-    try {
-      const resRecords = await api.get(`/users/doctors`);
-      const records = resRecords.data; // array of MedicalRecordResponse
-
-      // Giả sử mỗi MedicalRecordResponse có field feedbackList
-      // Nếu chưa có, chỉ tính tổng số record làm demo
-      totalDoctor.value = records.length;
-
-    } catch (err) {
-      console.error('Lỗi lấy bác sĩ:', err);
-    }
+  // 1. Lấy thông tin user
+  try {
+    const res = await api.get(`/users/${patientId}`);
+    patientName.value = res.data.name;
+    patientEmail.value = res.data.email;
+  } catch (err) {
+    console.error('Lỗi lấy thông tin người dùng:', err);
   }
+
+  // 2. Lấy householdId từ backend
+  try {
+    const resHouse = await api.get(`/households/by-user/${patientId}`);
+    householdId.value = resHouse.data.id;   // 🔥 householdId đúng đây
+  } catch (err) {
+    console.error("Lỗi lấy householdId:", err);
+  }
+
+  // 3. Lấy tổng feedback
+  try {
+    if (householdId.value) {
+      const resRecords = await api.get(`/medical-records/household/${householdId.value}`);
+      totalFeedback.value = resRecords.data.length;
+    }
+  } catch (err) {
+    console.error("Lỗi lấy feedback:", err);
+  }
+
+  // 4. Đếm thành viên trong gia đình
+  try {
+    const resMembers = await api.get(`/members/household/${householdId.value}`);
+    totalMember.value = resMembers.data.length;
+  } catch (err) {
+    console.error("Lỗi lấy member:", err);
+  }
+
+  // 5. Tổng số bác sĩ
+  try {
+    const resDoctor = await api.get(`/users/doctors`);
+    totalDoctor.value = resDoctor.data.length;
+  } catch (err) {
+    console.error('Lỗi lấy bác sĩ:', err);
+  }
+
 });
 </script>
+

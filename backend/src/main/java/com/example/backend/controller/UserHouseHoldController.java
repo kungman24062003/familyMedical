@@ -51,4 +51,5 @@ public class UserHouseHoldController {
     public void delete(@PathVariable Integer id) {
         service.delete(id);
     }
+
 }

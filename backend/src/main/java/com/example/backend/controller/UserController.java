@@ -66,6 +66,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllDoctors());
     }
 
+    @GetMapping("/next-id")
+    public ResponseEntity<Integer> getNextUserId() {
+        Integer nextId = userService.getNextId();
+        return ResponseEntity.ok(nextId);
+    }
+
 
 }
     @GetMapping("/me")
