@@ -117,16 +117,10 @@ const passwordRules = [
   (v: string) => !!v || 'Vui lòng nhập mật khẩu',
   (v: string) => v.length >= 6 || 'Mật khẩu ít nhất 6 ký tự'
 ]
- const loginWithGoogle = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google"
-  }
-const login = async () => {
-  if (!valid.value) return
-  loading.value = true
 
-  // Giả lập đăng nhập
-  await new Promise(resolve => setTimeout(resolve, 1500))
-  loading.value = false
+const loginWithGoogle = () => {
+  window.location.href = "http://localhost:8080/oauth2/authorization/google"
+}
 
 const login = async () => {
   if (!valid.value) return;
@@ -134,11 +128,10 @@ const login = async () => {
 
   try {
     const res = await api.post("/users/login/patient", {
-      email: form.username,     // backend dùng email
+      email: form.username,
       password: form.password
     });
 
-    // Lưu token từ backend trả về
     localStorage.setItem("patientToken", res.data.token);
     localStorage.setItem("patientName", res.data.name);
     localStorage.setItem("patientId", res.data.id);
@@ -151,9 +144,8 @@ const login = async () => {
     loading.value = false;
   }
 };
-
-
 </script>
+
 
 <style scoped>
 .login-wrapper {
