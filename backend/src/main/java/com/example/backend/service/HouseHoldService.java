@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.backend.entity.HouseHold;
 import com.example.backend.repository.HouseHoldRepository;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -38,16 +38,16 @@ public class HouseHoldService {
         householdRepo.deleteById(id);
     }
 
-    public Integer getNextId() {
-        // Lấy Household có ID lớn nhất
-        return householdRepo.findAll(Sort.by(Sort.Direction.DESC, "id"))
-                .stream()
-                .findFirst()
-                .map(h -> h.getId() + 1) // ID tiếp theo
-                .orElse(1); // Nếu chưa có dữ liệu, trả về 1
-    }
     @GetMapping("/next-id")
     public Integer getNextId() {
         return householdRepo.getMaxId() + 1;
+    }
+
+    public HouseHold getByHouseHeadId(Integer userId) {
+        HouseHold house = householdRepo.findByHouseHeadId(userId);
+        if (house == null) {
+            throw new RuntimeException("Không tìm thấy hộ gia đình cho userId = " + userId);
+        }
+        return house;
     }
 }

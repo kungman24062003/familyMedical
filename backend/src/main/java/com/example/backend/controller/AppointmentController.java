@@ -7,6 +7,7 @@ import com.example.backend.repository.UserRepository;
 import com.example.backend.repository.MedicalRecordRepository;
 import com.example.backend.dto.AppointmentRequest;
 import com.example.backend.dto.AppointmentResponse;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

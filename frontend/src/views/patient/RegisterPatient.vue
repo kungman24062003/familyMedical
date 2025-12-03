@@ -21,6 +21,14 @@
                   :rules="[rules.name]"
                 />
                 <v-text-field
+                  v-model="form.address"
+                  label="Địa chỉ"
+                  prepend-inner-icon="mdi-home"
+                  outlined
+                  class="mb-4"
+                  :rules="[rules.required]"
+                />
+                <v-text-field
                   v-model="form.dateOfBirth"
                   label="Ngày sinh"
                   type="date"
@@ -75,6 +83,16 @@
                   class="mb-4"
                   :rules="[rules.cccd]"
                 />
+                <v-select
+                  v-model="form.gender"
+                  :items="genderOptions"
+                  item-value="value"
+                  item-title="label"
+                  label="Giới tính"
+                  prepend-inner-icon="mdi-gender-male-female"
+                  outlined
+                  class="mb-4"
+                />
                 <v-text-field
                   v-model="form.confirmPassword"
                   label="Nhập lại mật khẩu"
@@ -105,7 +123,14 @@
 import { reactive, ref } from 'vue';
 import { useToast } from 'vue-toastification'; // nếu muốn hiện thông báo
 import type { VForm } from 'vuetify/components';
+import axios from 'axios';
+import router from '@/router';
 
+const genderOptions = [
+  { value: 'MALE', label: 'Nam' },
+  { value: 'FEMALE', label: 'Nữ' },
+  { value: 'OTHER', label: 'Khác' },
+];
 
 const toast = useToast();
 
@@ -120,8 +145,10 @@ const form = reactive({
   bhyt: '',
   cccd: '',
   dateOfBirth: '',
+  address: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  gender: '' // thêm trường giới tính
 });
 
 const rules = {
@@ -132,17 +159,81 @@ const rules = {
   bhyt: (v: string) => /^\d{12}$/.test(v) || 'Số BHYT phải đủ 12 số',
   cccd: (v: string) => /^\d{12}$/.test(v) || 'CCCD phải đủ 12 số',
   password: (v: string) => v.length >= 6 || 'Mật khẩu tối thiểu 6 ký tự',
-  confirmPassword: (v: string) => v === form.password || 'Mật khẩu không trùng khớp'
+  confirmPassword: (v: string) => v === form.password || 'Mật khẩu không trùng khớp',
+  gender: (v: string) => ['MALE', 'FEMALE', 'OTHER'].includes(v) || 'Vui lòng chọn giới tính'
 };
 
-const submitForm = () => {
+
+
+const submitForm = async () => {
   const validForm = formRef.value?.validate?.() ?? false;
-  if (validForm) {
-    console.log('Form hợp lệ, submit:', form);
-    toast.success('Đăng ký thành công!');
-    // TODO: gọi API backend
-  } else {
+
+  if (!validForm) {
     toast.error('Vui lòng kiểm tra lại thông tin');
+    return;
+  }
+
+  try {
+    // 1. Lấy ID tiếp theo cho User
+    const nextUserIdResp = await axios.get('http://localhost:8080/users/next-id');
+    const nextUserId: number = nextUserIdResp.data;
+
+    // 2. Tạo User
+    const now = new Date().toISOString(); // thời gian hiện tại
+    const userPayload = {
+      name: form.name,
+      email: form.email,
+      address: form.address,
+      password: form.password,
+      phone: form.phone,
+      role: "patient",
+      dateOfBirth: form.dateOfBirth,
+      gender: form.gender || "OTHER",
+      createdAt: now,
+      updatedAt: now
+    };
+
+    const userResp = await axios.post('http://localhost:8080/users', userPayload);
+    const createdUser = userResp.data;
+    console.log('User created:', createdUser);
+
+    // 3. Tạo HouseHold với headId = user mới
+    const householdPayload = {
+      address: form.address || '',
+      is_active: 0,
+      quantity: 1,
+      househead_id: { id: createdUser.id }
+    };
+    const householdResp = await axios.post('http://localhost:8080/households', householdPayload);
+    const createdHousehold = householdResp.data;
+    console.log('Household created:', createdHousehold);
+
+    // 4. Tạo Member (chủ hộ)
+    const memberPayload = {
+      fullname: form.name,
+      idCard: form.cccd,
+      bhyt: form.bhyt,
+      dateOfBirth: form.dateOfBirth,
+      relation: 'Chủ hộ', 
+      gender: form.gender || 'OTHER',
+      address: form.address || '',
+      household: { id: createdHousehold.id }
+    };
+
+    await axios.post('http://localhost:8080/members', memberPayload);
+    toast.success('Đăng ký thành công và tạo hồ sơ gia đình!');
+
+    // Reset form
+    (Object.keys(form) as (keyof typeof form)[]).forEach(key => {
+      form[key] = '';
+    });
+    formRef.value?.resetValidation?.();
+    alert("Đăng ký thành công");
+    router.push("/login")
+
+  } catch (error: any) {
+    console.error(error);
+    toast.error(error.response?.data || 'Có lỗi xảy ra khi đăng ký');
   }
 };
 

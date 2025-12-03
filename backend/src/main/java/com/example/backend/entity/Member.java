@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 
@@ -40,6 +41,7 @@ public class Member {
     private String relation;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "household_id", nullable = false)
     private HouseHold household;
 
