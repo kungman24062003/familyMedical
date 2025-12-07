@@ -1,54 +1,111 @@
-# frontend
+# 👨‍👩‍👧‍👦 FamilyHealth - Quản lý Sức khỏe Gia đình
 
-This template should help get you started developing with Vue 3 in Vite.
+Hệ thống quản lý sức khỏe gia đình với 3 vai trò: **Admin**, **Bác sĩ**, và **Bệnh nhân**.
 
-## Recommended IDE Setup
+## 🚀 Tech Stack
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Frontend:** React 18 + TypeScript + Vite
+- **UI Library:** Ant Design 5
+- **State Management:** Redux Toolkit
+- **HTTP Client:** Axios
+- **Styling:** SCSS Modules
+- **Date Library:** Day.js
+- **Backend API:** Spring Boot (Java)
 
-## Recommended Browser Setup
+## 📦 Cài đặt
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+```bash
+# Clone repository
+git clone <repo-url>
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+# Cài đặt dependencies
 npm install
+
+# Tạo file .env
+cp .env.example .env
 ```
 
-### Compile and Hot-Reload for Development
+## 🔧 Cấu hình
 
-```sh
+Tạo file `.env` với nội dung:
+
+```env
+VITE_API_URL=http://localhost:8080/familyhealth/api/v1
+```
+
+## 🏃 Chạy dự án
+
+```bash
+# Development mode
 npm run dev
-```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
+# Build production
 npm run build
+
+# Preview production build
+npm run preview
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## 🔐 Hệ thống phân quyền
 
-```sh
-npm run test:unit
+### **ADMIN** (Quản trị viên)
+- Quản lý người dùng
+- Quản lý bác sĩ (CRUD)
+- Xem thống kê hệ thống
+
+### **DOCTOR** (Bác sĩ)
+- Quản lý lịch khám bệnh
+- Cập nhật kết quả khám
+- Quản lý bệnh nhân
+
+### **PATIENT** (Bệnh nhân)
+- Quản lý thành viên gia đình
+- Đặt lịch khám
+- Xem kết quả khám bệnh
+
+## 📚 Tài liệu
+
+- [ROLE_SYSTEM.md](./ROLE_SYSTEM.md) - Chi tiết về hệ thống phân quyền
+- [MENU_STRUCTURE.md](./MENU_STRUCTURE.md) - Cấu trúc menu và tính năng admin
+- [REFACTOR_SUMMARY.md](./REFACTOR_SUMMARY.md) - Lịch sử refactoring
+
+## 🔑 Đăng nhập thử nghiệm
+
+```
+ADMIN:   admin / password
+DOCTOR:  doctor / password  
+PATIENT: patient / password
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## 📁 Cấu trúc thư mục
 
-```sh
-npm run lint
 ```
+src/
+├── api/              # API configuration
+├── components/       # Reusable components
+│   ├── admin/       # Admin components
+│   ├── layout/      # Layout components
+│   └── share/       # Shared components
+├── config/          # App configuration
+├── constants/       # Constants & enums
+├── pages/           # Page components
+│   ├── admin/      # Admin pages
+│   ├── doctor/     # Doctor pages
+│   └── ...
+├── redux/           # Redux store & slices
+├── services/        # API services
+├── styles/          # Global styles
+└── types/           # TypeScript types
+```
+
+## 🤝 Đóng góp
+
+1. Fork repository
+2. Tạo branch: `git checkout -b feature/AmazingFeature`
+3. Commit: `git commit -m 'Add some AmazingFeature'`
+4. Push: `git push origin feature/AmazingFeature`
+5. Tạo Pull Request
+
+## 📄 License
+
+MIT License

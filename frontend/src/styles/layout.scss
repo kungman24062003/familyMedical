@@ -1,0 +1,50 @@
+:root {
+  --fh-primary: #1a73e8;
+  --fh-bg: #f5f7fb;
+}
+
+/* basic layout styles for DashboardLayout */
+.logo {
+  font-family: Inter, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-size: 18px;
+  color: #111827;
+}
+
+.ant-layout-sider {
+  border-right: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Center menu items in sidebar */
+.ant-menu-item {
+  display: flex;
+  align-items: center;
+  padding-left: 25px !important;
+  padding-right: 24px !important;
+  height: 48px;
+  line-height: 48px;
+}
+
+.ant-menu-item .ant-menu-item-icon {
+  font-size: 18px;
+}
+
+.ant-layout-header {
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+}
+
+/* content area padding */
+.ant-layout-content {
+  background: transparent;
+  min-height: 360px;
+}
+
+/* small responsiveness */
+@media (max-width: 576px) {
+  .logo {
+    font-size: 14px;
+  }
+  .ant-layout-sider {
+    display: none;
+  }
+}

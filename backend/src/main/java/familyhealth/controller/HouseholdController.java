@@ -1,0 +1,89 @@
+package familyhealth.controller;
+
+import familyhealth.model.Household;
+import familyhealth.model.dto.HouseholdDTO;
+import familyhealth.model.dto.response.ApiResponse;
+import familyhealth.model.dto.response.AppointmentResponse;
+import familyhealth.model.dto.response.HouseHoldResponse;
+import familyhealth.model.dto.response.PageResponse;
+import familyhealth.service.IHouseholdService;
+import familyhealth.utils.MessageKey;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static org.springframework.http.HttpStatus.OK;
+
+@RestController
+@RequestMapping("/api/v1/households")
+@RequiredArgsConstructor
+public class HouseholdController {
+    final private IHouseholdService householdService;
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getHousehold(@PathVariable Long id){
+        try{
+            Household household = householdService.getHousehold(id);
+            return ResponseEntity.ok("Get Household " + household);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PATIENT_HOUSEHOLD')")
+    public ResponseEntity<?> createHousehold(@RequestBody HouseholdDTO householdDTO){
+        try{
+            Household household = householdService.createHousehold(householdDTO);
+            return ResponseEntity.ok("Create Household : " + household);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PATIENT_HOUSEHOLD')")
+    public ResponseEntity<?> updateHousehold(@PathVariable Long id,
+                                        @RequestBody HouseholdDTO householdDTO){
+        try{
+            Household household = householdService.updateHousehold(id, householdDTO);
+            return ResponseEntity.ok("Update household : " + household);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteHousehold(@PathVariable Long id){
+        try{
+            householdService.deleteHousehold(id);
+            return ResponseEntity.ok("Delete household : " + id);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getAllHousehold(){
+        try{
+
+            List<HouseHoldResponse> households = householdService.getALlHouseholds();
+
+            return ResponseEntity.ok(ApiResponse.builder()
+                    .code(OK.value())
+                    .message(MessageKey.GET_ALL_HOUSEHOLDS)
+                    .data(households)
+                    .build()
+            );
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+}
